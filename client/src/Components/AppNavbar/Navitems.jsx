@@ -1,7 +1,7 @@
 export const items = [
     {
         title: "Home",
-        url: "#",
+        url: "/",
 
     },
     {

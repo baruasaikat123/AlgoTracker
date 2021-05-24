@@ -21,7 +21,7 @@ const Navbar = () => {
             <ul className={isOpen ? 'nav_menu active' : 'nav_menu'}>
                 {items.map((x, index) => (
                     <li key={index}>
-                        <NavLink className="nav_item" to={x.url} >{x.title}</NavLink>
+                        <NavLink className="nav_item" exact = {index === 0 ? true : false} to={x.url} >{x.title}</NavLink>
                     </li>
                 ))}
             </ul>

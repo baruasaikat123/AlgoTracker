@@ -36,9 +36,7 @@ const Menubar = ({ showMenu, setShowMenu }) => {
                         <h5>Add Category</h5>
                     </div>
                     <div>
-                        {/* <i className="fas fa-plus-square" onClick={openModal}></i><br/><br /> */}
                         {showModal ? <img style={{backgroundColor: 'rgb(145, 155, 223)'}}src={plus} onClick={openModal} /> : <img src={plus} onClick={openModal} />}<br /><br />
-                        {/* <i className="fas fa-plus-square"></i>   */}
                         <img src={plus} />
                     </div>
                 </div>

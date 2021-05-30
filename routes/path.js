@@ -5,25 +5,27 @@ const Qus = require('../Models/question')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
-router.get('/addqustn', async(req,res) => {
+router.get('/getquestions', async(req,res) => {
     const getData = await Qus.find({})
     res.send(getData)
 })
 
-router.put('/addqustn/:id', async (req, res) => {
-    let query = { status: "pending..." }
-    let newvalue = { $set: { status: "Confirmed" } }
-    await Qus.updateOne(query, newvalue)
-})
+// router.put('/addqustn/:id', async (req, res) => {
+//     let query = { status: "pending..." }
+//     let newvalue = { $set: { status: "Confirmed" } }
+//     await Qus.updateOne(query, newvalue)
+// })
 
 
-router.post('/addqustn', async(req, res) => {
+router.post('/addquestions',async (req, res) => {
     try {
-        const {category,title,link,notes,status} = req.body
         
-        const question = new Qus({category,title,link,notes,status})
+        const {title, link, topic, details } = req.body
+           
+        const question = new Qus({ title, link, topic, details })
+        
         await question.save()
-        
+      
         return res.status(201).json({Message: 'Added succesfully'})
 
     }

@@ -5,13 +5,22 @@ import AppTool from './Components/Tool/AppTool';
 import Navbar from './Components/AppNavbar/Navbar';
 import Login from './Components/User/Login/Login';
 import Register from './Components/User/Registration/Register.jsx'
+import { useSelector, useDispatch } from 'react-redux'
+import { getQuestions } from './Action'
+import { useEffect } from 'react'
 
 function App() {
+  
+  const dispatch = useDispatch()
+  const data = useSelector((state) => {
+    return state.data
+  })
+  useEffect(() => {
+    dispatch(getQuestions())
+  },[])
   return (
     <>
-      {/* <Navbar /> */}
-      {/* <Glass/> */}
-
+      
       <Router>
           <Navbar />
           <div>

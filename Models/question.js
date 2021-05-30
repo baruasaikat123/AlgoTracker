@@ -2,10 +2,7 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const qusSchema = new Schema({
-    category: {
-        type: String,
-        required: true
-    },
+ 
     title: {
         type: String,
         required: true
@@ -14,8 +11,11 @@ const qusSchema = new Schema({
         type: String,
         required: true
     },
-    notes: String,
-    status: String
+    topic: {
+        type: String,
+        required: true
+    },  
+    details: String,
 })
 
 const Qus = mongoose.model('QUESTION', qusSchema)

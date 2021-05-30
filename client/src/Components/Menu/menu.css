@@ -21,8 +21,9 @@ img:hover{
     background-color: rgba(128, 123, 123, 0.8);
     border-radius: 10px;
     box-shadow: 0 3px 13px rgba(54, 52, 52, 0.2);
-    padding: 8px;
+    padding: 8px 12px;
     font-size: 15px;
     color: #fff;
-    width: 7.5rem;
+    width: 7.3rem;
+    font-family: 'PT Serif', serif;
 }

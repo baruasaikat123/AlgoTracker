@@ -8,6 +8,7 @@ import Register from './Components/User/Registration/Register.jsx'
 import { useSelector, useDispatch } from 'react-redux'
 import { getQuestions } from './Action'
 import { useEffect } from 'react'
+import Sidebar from './Components/Sidebar/Sidebar'
 
 function App() {
   
@@ -20,9 +21,9 @@ function App() {
   },[])
   return (
     <>
-      
+      <Sidebar />
       <Router>
-          <Navbar />
+          {/* <Navbar /> */}
           <div>
             <Route path="/dash"
             component={AppTool} />

@@ -1,13 +1,50 @@
 import React,{ useState } from 'react'
 import './login.css'
 import { NavLink } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 
 const Login = () => {
 
-    const [getData, setgetData] = useState(false)
+    const history = useHistory()
+     
+    const [user, setUser] = useState({
+        email: "", password:""
+    })
+    let name,value
+    const handleLogin = (e) => {
+        name = e.target.name
+        value = e.target.value
 
-    const handleLogin = () => {
-        setgetData()
+
+        setUser({...user, [name]: value })
+    }
+
+    const LoginUser = async (e) => {
+        e.preventDefault()
+
+        const { email, password } = user
+
+        const res = await fetch("/login", {
+
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                email, password
+            })
+        })
+        //const data = res.json()
+        
+        history.push('/dash')
+
+        // if (res.status === 400 || !data) {
+        //     alert('Invalid Credentials')
+        // }
+        // else {
+        //     alert('Login is successful')
+        //     history.push('/dash')
+        // }
     }
 
     return (
@@ -21,15 +58,15 @@ const Login = () => {
                 <form method="POST">
                         <div className="inputbox">
                             <i className="far fa-envelope"></i>
-                            <input type="email" value="" name="email"
-                                placeholder="Enter Email" />                          
+                            <input type="email" value={user.email} name="email"
+                            onChange={ handleLogin} placeholder="Enter Email" />
                         </div>
                         <div className="inputbox">
                             <i className="far fa-lock"></i>
-                            <input type="password" value="" name="password"
-                                placeholder="Enter Password" />                          
+                            <input type="password" value={user.password} name="password"
+                            onChange={handleLogin } placeholder="Enter Password" />
                         </div>
-                    <input type="Submit" value="Login" />
+                    <input type="Submit" value="Login" onClick={ LoginUser}/>
                 </form>
                 <p><a href="#">Forgot Password?</a></p>
                 <p><NavLink to="/register">Not Registered?</NavLink></p>

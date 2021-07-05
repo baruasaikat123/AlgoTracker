@@ -4,77 +4,41 @@ const User = require('../Models/user')
 const Qus = require('../Models/question')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
+const auth = require('../Middleware/auth')
 
-router.get('/getquestions', async(req,res) => {
-    const getData = await Qus.find({})
-    res.send(getData)
-})
-
-// router.put('/addqustn/:id', async (req, res) => {
-//     let query = { status: "pending..." }
-//     let newvalue = { $set: { status: "Confirmed" } }
-//     await Qus.updateOne(query, newvalue)
-// })
-
-
-router.post('/addquestions',async (req, res) => {
+router.get('/logout', async (req, res) => {
+    
     try {
-        
-        const {title, link, topic, details } = req.body
-           
-        const question = new Qus({ title, link, topic, details })
-        
-        await question.save()
-      
-        return res.status(201).json({Message: 'Added succesfully'})
-
+        res.cookie("jwt", "", {
+            httpOnly: true,
+            expires: new Date(0),
+        })
+        return res.status(201).json()
     }
     catch (err) {
-        console.log(err)
+        
+        console.log(err);
     }
+
+
 })
-/*router.post('/register', (req,res) => {
 
-    const { name, email, mobile, password, confirm_password } = req.body
 
-    if (!name || !email || !password || !confirm_password) {
-        return res.status(422).json({Error: 'Required to fill this'})
-    }
-    
-    User.findOne({ email })
-        .then((userExist) => {
-            if (userExist) {
-                return res.status(422).json({ Message: 'Email already exists' })
-            }
-            const user = new User({ name, email, mobile, password, confirm_password })
-            user.save()
-                .then(() => {
-                    res.status(201).json({Message:'User registered successfully'})
-                })
-                .catch((err) => {
-                    res.status(500).json({ Message:'Failed to register'})
-                })         
-        })
-        .catch((err) => {console.log(err)})
-})*/
 
 router.post('/register', async (req, res) => {
 
     try {
-        const { name, email, mobile, password, cpassword } = req.body
+        const { email,password } = req.body
 
-        if (!name || !email || !mobile || !password || !cpassword) {
+        if (!email || !password) {
             return res.status(422).json({ Error: "required" })
         }
         const userExist = await User.findOne({ email: email })
         if (userExist) {
             return res.status(422).json({ Message: 'Email already exists' })
         }
-        else if (password != cpassword) {
-            return res.status(422).json({ Message: 'Password is not matching' })
-        }
         else {
-            const user = new User({ name, email, mobile, password, cpassword })
+            const user = new User({ email, password})
             await user.save()
             return res.status(201).json({ Message: 'User registered successfully' })
         }
@@ -85,7 +49,7 @@ router.post('/register', async (req, res) => {
     
 })
 
-router.post('/signin', async (req, res) => {
+router.post('/login', async (req, res) => {
 
     try{
         const { email, password } = req.body
@@ -97,7 +61,11 @@ router.post('/signin', async (req, res) => {
             const isMatch = await bcrypt.compare(password, userLogin.password)
             //console.log(token)
             if (isMatch) {
-                let token = await userLogin.generateAuthToken()
+                //let token = await userLogin.generateAuthToken()
+                let token = jwt.sign({
+                    user : userLogin._id
+                }, process.env.SECRET_KEY)
+                
                 res.cookie("jwt", token, {
                     expires: new Date(Date.now() + 86400000),
                     httpOnly: true
@@ -118,4 +86,19 @@ router.post('/signin', async (req, res) => {
     }
 })
 
+//Dashboard with middleware
+router.get('/dash',auth,async (req,res) => {
+
+    try {
+        const data = req.user
+        return res.json(data)
+    }
+    catch (err) {
+        console.log(err);
+    }
+})
+
 module.exports = router
+
+
+

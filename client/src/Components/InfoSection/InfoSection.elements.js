@@ -22,6 +22,7 @@ export const InfoColumn = styled.div`
   flex: 1;
   max-width: 50%;
   flex-basis: 50%;
+  
   @media screen and (max-width: 768px) {
     max-width: 100%;
     flex-basis: 100%;

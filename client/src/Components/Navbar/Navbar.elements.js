@@ -78,10 +78,7 @@ export const NavMenu = styled.ul`
 export const NavItem = styled.li`
   height: 60px;
   border-bottom: 2px solid transparent;
-  &:hover {
-    border-bottom: 2px solid #4b59f7;
-    
-  }
+
   @media screen and (max-width: 960px) {
     width: 100%;
     &:hover {
@@ -100,6 +97,7 @@ export const NavItemBtn = styled.li`
     align-items: center;
     width: 100%;
     height: 120px;
+    
   }
 `;
 
@@ -111,6 +109,7 @@ export const NavLinks = styled(Link)`
   padding: 0.5rem 1rem;
   height: 100%;
   margin-top: 10px;
+  font-size: 16px;
 
   :hover{
 

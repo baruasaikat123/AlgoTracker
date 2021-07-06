@@ -1,11 +1,17 @@
 const express = require('express')
 const router = express.Router()
 const User = require('../Models/user')
-const Qus = require('../Models/question')
+const Qusestion = require('../Models/question')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const auth = require('../Middleware/auth')
 
+
+
+
+
+
+//Logout User
 router.get('/logout', async (req, res) => {
     
     try {
@@ -24,12 +30,13 @@ router.get('/logout', async (req, res) => {
 })
 
 
-
+//New Registration
 router.post('/register', async (req, res) => {
 
     try {
-        const { email,password } = req.body
-
+        const { fname, lname, email,password } = req.body
+        const name = fname + " "+lname
+        
         if (!email || !password) {
             return res.status(422).json({ Error: "required" })
         }
@@ -38,7 +45,7 @@ router.post('/register', async (req, res) => {
             return res.status(422).json({ Message: 'Email already exists' })
         }
         else {
-            const user = new User({ email, password})
+            const user = new User({ name, email, password})
             await user.save()
             return res.status(201).json({ Message: 'User registered successfully' })
         }
@@ -49,6 +56,7 @@ router.post('/register', async (req, res) => {
     
 })
 
+//Login User
 router.post('/login', async (req, res) => {
 
     try{
@@ -85,6 +93,7 @@ router.post('/login', async (req, res) => {
         console.log(err);
     }
 })
+
 
 //Dashboard with middleware
 router.get('/dash',auth,async (req,res) => {

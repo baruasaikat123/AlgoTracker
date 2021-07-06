@@ -9,8 +9,8 @@ const useStyles = makeStyles((theme) => ({
       position: 'absolute',
       bottom: theme.spacing(8),
       right: theme.spacing(12),
-      height: '80px',
-      width: '80px'
+      height: '55px',
+      width: '55px'
   },
   root: {
       background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
       padding: '0 30px',
   },
   icon: {
-    fontSize: '35px',
+    fontSize: '23px',
   }
 }))
 

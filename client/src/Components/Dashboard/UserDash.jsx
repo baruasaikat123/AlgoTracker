@@ -1,12 +1,14 @@
 import React from 'react'
 import { useState } from 'react'
-
+import AppTool  from '../Tool/AppTool'
+import Sidebar from '../Sidebar/NewSidebar'
 const UserDash = () => {
 
     return (
-        <div>
-                          
-        </div>
+        <>
+           <AppTool /> 
+           <Sidebar />            
+        </>
     )
 }
 

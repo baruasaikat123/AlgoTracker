@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react'
 import { useHistory } from 'react-router'
 import axios from 'axios'
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const Logout = () => {
     
@@ -11,10 +12,14 @@ const Logout = () => {
         try {
         
             const result = await axios.get('/logout')
-           // history.push('/login')
+        
             if (result.status === 201) {
                 
-                history.push('/login')
+                history.push('/login',{replace:true})
+            }
+            else {
+                
+                alert('Something wrong!!!')
             }
         }
         catch (err) {
@@ -28,9 +33,9 @@ const Logout = () => {
     }, [])
     
     return (
-        <div>
-            Bye
-        </div>
+        <>
+            <CircularProgress disableShrink />
+        </>
     )
 }
 

@@ -80,7 +80,7 @@ export default function SignIn() {
       //const data = await res.json()
 
       if (res.status === 201) {
-        history.push('/about')
+        history.push('/dash')
       }
       
       else {
@@ -132,10 +132,10 @@ export default function SignIn() {
                     fullWidth
                     onChange = {handleChange}
                   />
-                <FormControlLabel
+                {/* <FormControlLabel
                     control={<Checkbox value="remember" color="primary" />}
                     label="Remember me"
-                  />
+                  /> */}
                 <Button
                     type="submit"
                     fullWidth

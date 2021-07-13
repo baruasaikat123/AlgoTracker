@@ -7,8 +7,8 @@ import plus from '../../Images/plus-square.svg'
 const useStyles = makeStyles((theme) => ({
     absolute: {
         position: 'absolute',
-        bottom: theme.spacing(20),
-        right: theme.spacing(14.8),
+        bottom: theme.spacing(17),
+        right: theme.spacing(13.5),
         width: '170px',
         display: 'flex',
         alignItems: 'center',
@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }))
 
-const Menubar = ({ showMenu, setShowMenu }) => {
+const Menubar = ({ showMenu}) => {
 
     const [showModal, setShowModal] = useState(false)
 

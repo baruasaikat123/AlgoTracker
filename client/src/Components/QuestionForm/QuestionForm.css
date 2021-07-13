@@ -84,12 +84,12 @@
     width: 75%;
   }
   
-  /* .add__new__topic__container {
+   .add__new__topic__container {
     display: flex;
     flex-direction: row !important;
     justify-content: space-between;
     width: 75%;
-  } */
+  } 
   
   .cross__btn {
     color: rgba(255, 0, 0, 0.75);

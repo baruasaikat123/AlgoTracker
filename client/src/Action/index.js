@@ -4,24 +4,16 @@ const axios = require('axios')
 export const postQuestions = (data) => {
     return async (dispatch) => {
         data.map(async (x, key) => (
-            await axios({
-                method: 'post',
-                url: '/addquestions',
-                data: {
-                    title:  x.title , 
-                    link: x.link,
-                    details: x.details,
-                    topic: x.topic
-                }
+            await fetch('/addquestion',{
+                method:"POST",
+                headers: {
+                    "Content-Type": "application/json"
+                  },
+                  body: JSON.stringify({
+                    title: x.title , link: x.link, topic: x.topic, details:x.details
+                  })
             })
         ))
-        // let questions = []
-        
-        // data.map((x, key) => (
-        //     questions.push({ title: x.title, link: x.link, details: x.details, topic: x.topic })
-        // ))
-        // console.log(questions);
-        // await axios.post('/addquestions',data)
 
         dispatch(getQuestions())
     }

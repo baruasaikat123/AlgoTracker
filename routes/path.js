@@ -1,13 +1,10 @@
 const express = require('express')
 const router = express.Router()
 const User = require('../Models/user')
-const Qusestion = require('../Models/question')
+const Question = require('../Models/question')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const auth = require('../Middleware/auth')
-
-
-
 
 
 
@@ -95,17 +92,59 @@ router.post('/login', async (req, res) => {
 })
 
 
+
 //Dashboard with middleware
 router.get('/dash',auth,async (req,res) => {
 
     try {
         const data = req.user
         return res.json(data)
+        //const info = await User.findOne({_id:data})
+        //return res.json(info)
     }
     catch (err) {
         console.log(err);
     }
 })
+
+
+//Add Questions
+router.post('/addquestion', async (req, res) => {
+
+    try {
+        const { userId, title, link, topic, details } = await req.body
+
+        if (!title || !topic) {
+            return res.status(422).json({ Error: "required" })
+        }
+
+        const question = new Question({ userId, title, link, topic, details})
+        await question.save()
+        return res.status(201).json({ Message: 'Added successfully' })
+
+    }
+    catch (err) {
+        console.log(err)
+    }
+})
+
+//Get Questions
+router.get('/showquestion/:id/:topic', async (req, res) => {
+    
+    try {
+
+        const userId = req.params.id
+        const topic = req.params.topic
+        const getQuestion = await Question.find({ userId:userId, topic:topic},{_v:0})
+        res.send(getQuestion)
+        //return res.status(200).json({Message: 'Successfull'})
+    }
+    catch (err) {
+        
+        console.log(err)
+    }
+})
+
 
 module.exports = router
 

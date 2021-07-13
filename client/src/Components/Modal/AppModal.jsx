@@ -6,10 +6,11 @@ import QuestionForm from '../QuestionForm/QuestionForm';
 import axios from 'axios';
 import { useDispatch } from 'react-redux'
 import {postQuestions} from '../../Action'
+import { useHistory } from 'react-router-dom';
 
 const AppModal = ({ showModal, setShowModal},props) => {
   
-    
+    const history = useHistory()
     const toggle = () => setShowModal(!showModal);
     
     const closeBtn = <MdClose className="close-btn" onClick={toggle}>&times;</MdClose>
@@ -25,7 +26,7 @@ const AppModal = ({ showModal, setShowModal},props) => {
     const saveQuestions = () => {
         
         dispatch(postQuestions(questionArray))
-
+       
     }
     return (
         <>

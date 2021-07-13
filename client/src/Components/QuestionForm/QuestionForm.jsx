@@ -4,7 +4,7 @@ import "./QuestionForm.css";
 function QuestionForm({ handleQuestionState }) {
   
   const [questionDetails, setQuestionDetails] = useState([
-    { title: "", link: "", topic: "array", id: 0, details: "" },
+    { title: "", link: "", topic: "", id: 0, details: "" },
   ]);
 
   const [errorMessage, setErrorMessage] = useState("");

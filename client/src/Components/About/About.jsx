@@ -1,10 +1,17 @@
-import react, { useState, useEffect } from 'react'
-import {useHistory} from 'react-router-dom'
+import React, {useState, useEffect} from 'react'
+import './about.css'
+import Sidebar from '../Sidebar/NewSidebar'
+import { useHistory } from 'react-router'
+
 
 const About = () => {
-    
+
     const history = useHistory()
     const [userData, setuserData] = useState()
+    const sleep = (milliseconds) => {
+        return new Promise(resolve => setTimeout(resolve, milliseconds))
+    }
+
     const callAbout = async () => {
         try {
             const res = await fetch('/dash', {
@@ -15,15 +22,15 @@ const About = () => {
                 },
                 credentials: "include"
             })
-
-          
+            
             if (res.status === 200) {
                 const data = await res.json()
                 console.log(data)
                 setuserData(data)
             }
             else {
-                history.push('/login')
+              await sleep(100)
+              history.push('/login')
             }
             
         }
@@ -35,11 +42,13 @@ const About = () => {
     useEffect(() => {
         callAbout()
     }, [])
+    
     return (
-        <div>
-            <h1>{`Welcome ${userData}`}</h1>
+        <>
+            <Sidebar />
+            <h2 style={{display:'flex', justifyContent:'center'}}>{userData}</h2>
             
-        </div>
+        </>
     )
 }
 

@@ -2,7 +2,12 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const qusSchema = new Schema({
- 
+    
+    userId: {
+        type: mongoose.Schema.Types.ObjectID,
+        ref: 'User',
+        required: true
+    },
     title: {
         type: String,
         required: true

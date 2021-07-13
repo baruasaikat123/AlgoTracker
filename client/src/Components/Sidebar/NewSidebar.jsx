@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState, useEffect} from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -18,7 +18,10 @@ import ListItemText from '@material-ui/core/ListItemText';
 import HomeIcon from '@material-ui/icons/Home';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import TableChartIcon from '@material-ui/icons/TableChart';
-import { NavLink } from 'react-router-dom'
+import { NavLink, useHistory } from 'react-router-dom'
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import AppTool from '../Tool/AppTool'
+import PostAddIcon from '@material-ui/icons/PostAdd';
 
 const drawerWidth = 240;
 
@@ -82,7 +85,6 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     justifyContent: 'flex-end',
     padding: theme.spacing(0, 1),
-    // necessary for content to be below app bar
     ...theme.mixins.toolbar,
   },
   content: {
@@ -92,9 +94,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function MiniDrawer() {
-  
-  
+export default function Sidebar() {   
+
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -106,8 +107,49 @@ export default function MiniDrawer() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+  const history = useHistory()
+    
+  //const [userData, setuserData] = useState({})
+     
+  const sleep = (milliseconds) => {
+    return new Promise(resolve => setTimeout(resolve, milliseconds))
+  }
 
+  const callAbout = async () => {
+    try {
+        const res = await fetch('/dash', {
+            method: "GET",
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json"
+            },
+            credentials: "include"
+        })
+        
+        if (res.status === 200) {
+            const data = await res.json()
+            console.log(data)
+            //setuserData(data)
+        }
+        else {
+          await sleep(100)
+          history.push('/login')
+        }
+        
+    }
+    catch (err) {
+        console.log(err)
+        history.push('/login')
+    }
+  }
+  useEffect(() => {
+    callAbout()
+  }, [])
+  
+  
   return (
+    
+    <>
     <div className={classes.root}>
       <CssBaseline />
       <AppBar
@@ -116,6 +158,7 @@ export default function MiniDrawer() {
           [classes.appBarShift]: open,
         })}
       >
+         
         <Toolbar>
           <IconButton
             color="inherit"
@@ -129,7 +172,7 @@ export default function MiniDrawer() {
           <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap>
-            Welcome
+            Welcome 
           </Typography>
         </Toolbar>
       </AppBar>
@@ -159,14 +202,27 @@ export default function MiniDrawer() {
             </ListItem>
         </List>
         <List>
-            <ListItem button key="Questions">
-                <ListItemIcon><NavLink to='/table'><TableChartIcon style={{fill:'white'}} /></NavLink></ListItemIcon>
-                <ListItemText style={{color:'white'}} primary="Questions" />
+          <ListItem button key="Profile">
+            <ListItemIcon><NavLink to='/about'><AccountCircleIcon style={{fill:'white'}}/></NavLink></ListItemIcon>
+            <ListItemText style={{color:'white'}} primary="My Profile" />
+          </ListItem>
+        </List>
+        <List>
+          <ListItem button key="Add Question">
+              <ListItemIcon ><NavLink to="/addquestion"><PostAddIcon style={{fill:'white'}}  /></NavLink></ListItemIcon>
+            <ListItemText style={{color:'white'}} primary="Add Question" />
+          </ListItem>
+        </List>
+        <List>
+            <ListItem button key="Show Questions">
+                <ListItemIcon><NavLink to='/topic'><TableChartIcon style={{fill:'white'}} /></NavLink></ListItemIcon>
+                <ListItemText style={{color:'white'}} primary="My Questions" />
             </ListItem>
         </List>
         <Divider />
+          
         
-        <List style={{marginTop:"380px"}}>
+        <List style={{marginTop:"280px"}}>
            {/* <ListItem button key="Questions">
                 <ListItemIcon><TableChartIcon  /></ListItemIcon>
                 <ListItemText primary="Questions" />
@@ -174,10 +230,10 @@ export default function MiniDrawer() {
         </List>
         <Divider  style={{backgroundColor:'white'}}/>
         
-        <List style={{marginTop:'50px'}}>
-            <ListItem button key="Home">
-                    <ListItemIcon><ExitToAppIcon style={{fill:'white'}}/></ListItemIcon>
-                <ListItemText style={{color:'white'}} primary="Logout" />
+        <List style={{marginTop:'30px'}}>
+            <ListItem button key="Logout">
+              <ListItemIcon><NavLink to='/logout'><ExitToAppIcon style={{fill:'white'}}/></NavLink></ListItemIcon>
+              <ListItemText style={{color:'white'}} primary="Logout" />
             </ListItem>
         </List>
         
@@ -186,6 +242,7 @@ export default function MiniDrawer() {
         <div className={classes.toolbar} />
         
       </main>
-    </div>
+      </div>
+      </>
   );
 }
